@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_cubit/cubit/counter.dart';
+import 'package:flutter_bloc_cubit/bloc/counter_bloc.dart';
+import 'package:flutter_bloc_cubit/bloc/counter_events.dart';
+// import 'package:flutter_bloc_cubit/cubit/counter_cubit.dart';
 
 class Handlers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CounterCubit, int>(
+    return BlocBuilder<CounterBloc, int>(
       builder: (context, count) {
         return Container(
           alignment: Alignment.bottomCenter,
@@ -20,7 +22,7 @@ class Handlers extends StatelessWidget {
                     // context.read<CounterCubit>().incrementWithWait();
 
                     for (int i = 0; i < 10; i++) {
-                      context.read<CounterCubit>().incrementWithWait();
+                      context.read<CounterBloc>().add(CounterEvent.increment);
                     }
                   },
                   color: Colors.blue,
@@ -36,7 +38,9 @@ class Handlers extends StatelessWidget {
               Container(
                 child: CupertinoButton(
                   onPressed: () {
-                    context.read<CounterCubit>().defaultDecrement();
+                    for (int i = 0; i < 10; i++) {
+                      context.read<CounterBloc>().add(CounterEvent.decrement);
+                    }
                   },
                   color: Colors.blue,
                   child: Text(
